@@ -1,0 +1,27 @@
+{
+    "name": "tinhphp/woocommerce",
+    "authors": [
+        {
+            "name": "Tình Nguyễn Văn",
+            "email": "tinhnguyenvan91@gmail.com"
+        }
+    ],
+    "require": {
+        "darryldecode/cart": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "TinhPHP\\Woocommerce\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TinhPHP\\Woocommerce\\WoocommerceServiceProvider"
+            ],
+            "aliases": {
+                "Woocommerce": "TinhPHP\\Woocommerce\\Facades\\WoocommerceFacade"
+            }
+        }
+    }
+}
