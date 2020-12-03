@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'MENU_ADMIN' => [
+    'MENU_APP' => [
         [
             'title' => 'nav.menu_left.products',
             'url' => '',

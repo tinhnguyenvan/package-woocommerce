@@ -10,10 +10,6 @@ Route::group(
         'prefix' => 'admin/woocommerce'
     ],
     function () {
-        Route::get('/', function () {
-            return redirect(admin_url('woocommerce/products'));
-        });
-
         // products
         Route::get('products', [ProductController::class, 'index'])->name('admin.products.index');
         Route::get('products/create', [ProductController::class, 'create'])->name('admin.products.create');

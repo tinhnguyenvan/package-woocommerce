@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use TinhPHP\Woocommerce\Http\Controllers\ProductCategoryController;
 use TinhPHP\Woocommerce\Http\Controllers\ProductController;
 use TinhPHP\Woocommerce\Http\Controllers\CartController;
 
