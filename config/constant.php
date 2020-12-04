@@ -2,7 +2,7 @@
 
 return [
     'MENU_APP' => [
-        [
+        'nav.menu_left.products' => [
             'title' => 'nav.menu_left.products',
             'url' => '',
             'icon' => 'fa fa-cube',
@@ -24,7 +24,7 @@ return [
                 ],
             ]
         ],
-        [
+        'nav.menu_left.woocommerces' => [
             'title' => 'nav.menu_left.woocommerces',
             'url' => '',
             'icon' => 'fa fa-shopping-bag',
