@@ -2,6 +2,8 @@
 
 namespace TinhPHP\Woocommerce\Console;
 
+use App\Models\Plugin;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class InstallWoocommercePackage extends Command
@@ -14,18 +16,37 @@ class InstallWoocommercePackage extends Command
     {
         $this->info('Installing WoocommercePackage...');
 
+        Plugin::query()->updateOrInsert(
+            [
+                'code' => 'woocommerce',
+            ],
+            [
+                'version' => '1.0.1',
+                'status' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
+            ]
+        );
+
         $this->info('Publishing configuration...');
 
-        $this->call('vendor:publish', [
-            '--provider' => "TinhPHP\Woocommerce\WoocommerceServiceProvider",
-            '--tag' => 'config'
-        ]);
+        $this->call(
+            'vendor:publish',
+            [
+                '--provider' => "TinhPHP\Woocommerce\WoocommerceServiceProvider",
+                '--tag' => 'config'
+            ]
+        );
 
-        $this->call('vendor:publish', [
-            '--provider' => "TinhPHP\Woocommerce\WoocommerceServiceProvider",
-            '--tag' => 'migrations',
-            '--force' => true
-        ]);
+        $this->call(
+            'vendor:publish',
+            [
+                '--provider' => "TinhPHP\Woocommerce\WoocommerceServiceProvider",
+                '--tag' => 'migrations',
+                '--force' => true
+            ]
+        );
 
         $this->info('Installed WoocommercePackage');
     }
