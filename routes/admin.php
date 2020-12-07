@@ -17,7 +17,7 @@ Route::group(
         Route::get('products/{id}', [ProductController::class, 'show'])->name('admin.products.show');
         Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
         Route::put('products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
-        Route::patch('products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
+        Route::patch('products/{id}', [ProductController::class, 'update'])->name('admin.products.update.patch');
         Route::delete('products/destroy-multi', [ProductController::class, 'destroyMulti'])->name('admin.products.destroy-multi');
         Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
 
@@ -28,7 +28,7 @@ Route::group(
         Route::get('product_categories/{id}', [ProductCategoryController::class, 'show'])->name('admin.product_categories.show');
         Route::get('product_categories/{id}/edit', [ProductCategoryController::class, 'edit'])->name('admin.product_categories.edit');
         Route::put('product_categories/{id}', [ProductCategoryController::class, 'update'])->name('admin.product_categories.update');
-        Route::patch('product_categories/{id}', [ProductCategoryController::class, 'update'])->name('admin.product_categories.update');
+        Route::patch('product_categories/{id}', [ProductCategoryController::class, 'update'])->name('admin.product_categories.update.patch');
         Route::delete('product_categories/{id}', [ProductCategoryController::class, 'destroy'])->name('admin.product_categories.destroy');
 
         // orders
@@ -42,7 +42,7 @@ Route::group(
         Route::post('orders/resent-mail/{id}', [OrderController::class, 'resentMail'])->name('admin.resent-mail.store');
         Route::post('orders/status/{id}', [OrderController::class, 'status'])->name('admin.status.store');
         Route::put('orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
-        Route::patch('orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
+        Route::patch('orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update.patch');
         Route::delete('orders/{id}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
     }
 );
