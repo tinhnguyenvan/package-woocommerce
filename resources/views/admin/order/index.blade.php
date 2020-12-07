@@ -22,12 +22,12 @@
                 <table class="table table-responsive-sm table-bordered table-hover font12">
                     <thead>
                     <tr class="bg-light">
-                        <th>{{ trans('sale_order.code') }}</th>
-                        <th class="th-category_id">{{ trans('sale_order.billing_fullname') }}</th>
-                        <th class="th-category_id">{{ trans('sale_order.billing_phone') }}</th>
-                        <th class="th-created_at">{{ trans('sale_order.created_at') }}</th>
-                        <th class="th-created_at">{{ trans('sale_order.price_final') }}</th>
-                        <th class="th-status text-center">{{ trans('sale_order.status') }}</th>
+                        <th>{{ trans('lang_woocommerce::sale_order.code') }}</th>
+                        <th class="th-category_id">{{ trans('lang_woocommerce::sale_order.billing_fullname') }}</th>
+                        <th class="th-category_id">{{ trans('lang_woocommerce::sale_order.billing_phone') }}</th>
+                        <th class="th-created_at">{{ trans('lang_woocommerce::sale_order.created_at') }}</th>
+                        <th class="th-created_at">{{ trans('lang_woocommerce::sale_order.price_final') }}</th>
+                        <th class="th-status text-center">{{ trans('lang_woocommerce::sale_order.status') }}</th>
                     </tr>
                     </thead>
                     <tbody>

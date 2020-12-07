@@ -147,7 +147,7 @@ class SaleOrder extends Model
 
         $html = [];
         foreach ($data as $value) {
-            $html[$value] = trans('sale_order.status.' . $value);
+            $html[$value] = trans('lang_woocommerce::sale_order.status.' . $value);
         }
 
         return $html;
@@ -161,7 +161,7 @@ class SaleOrder extends Model
     public function getStatusTextAttribute()
     {
         if ($this->status > 0) {
-            $text = trans('sale_order.status.' . $this->status);
+            $text = trans('lang_woocommerce::sale_order.status.' . $this->status);
         } else {
             $text = '--';
         }

@@ -108,7 +108,7 @@ class SaleOrderService extends BaseService
 
         $form = [
             'status' => [
-                'text' => trans('sale_order.status'),
+                'text' => trans('lang_woocommerce::sale_order.status'),
                 'type' => 'select',
                 'data' => SaleOrder::dropDownStatus(),
             ],

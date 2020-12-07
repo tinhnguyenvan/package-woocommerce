@@ -6,23 +6,23 @@
             <div class="col-9">
                 <div class="card">
                     <div class="card-body">
-                        <h4>{{ trans('sale_order.product') }}</h4>
+                        <h4>{{ trans('lang_woocommerce::sale_order.product') }}</h4>
                         <hr/>
                         @csrf
 
                         <div class="input-group" style="margin: 10px auto">
                             <input class="form-control" id="product_id" name="search" style="width: 100%"
-                                   placeholder="{{ trans('sale_order.search.add') }}"/>
+                                   placeholder="{{ trans('lang_woocommerce::sale_order.search.add') }}"/>
 
                         </div>
 
                         <table class="table table-responsive-sm">
                             <thead>
                             <tr>
-                                <th>{{ trans('sale_order.product') }}</th>
-                                <th style="width: 100px" class="text-center">{{ trans('sale_order.quantity') }}</th>
-                                <th style="width: 200px" class="text-center">{{ trans('sale_order.price') }}</th>
-                                <th style="width: 200px" class="text-center">{{ trans('sale_order.total') }}</th>
+                                <th>{{ trans('lang_woocommerce::sale_order.product') }}</th>
+                                <th style="width: 100px" class="text-center">{{ trans('lang_woocommerce::sale_order.quantity') }}</th>
+                                <th style="width: 200px" class="text-center">{{ trans('lang_woocommerce::sale_order.price') }}</th>
+                                <th style="width: 200px" class="text-center">{{ trans('lang_woocommerce::sale_order.total') }}</th>
                             </tr>
                             </thead>
                             <tbody id="add-item-order">
@@ -30,7 +30,7 @@
                             </tbody>
                             <tfoot>
                             <td class="text-right" colspan="3">
-                                <strong>{{ trans('sale_order.total_final') }}</strong>
+                                <strong>{{ trans('lang_woocommerce::sale_order.total_final') }}</strong>
                             </td>
                             <td class="text-center">
                                 <span id="so_total_final">0</span>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-save"></i>
-                                {{ trans('sale_order.title_create') }}
+                                {{ trans('lang_woocommerce::sale_order.title_create') }}
                             </button>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h4>{{ trans('sale_order.billing_info') }}</h4>
+                        <h4>{{ trans('lang_woocommerce::sale_order.billing_info') }}</h4>
                         <hr/>
                         <div class="form-group">
                             <label class="">{{ trans('common.fullname') }}</label>

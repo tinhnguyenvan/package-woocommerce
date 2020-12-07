@@ -1,4 +1,4 @@
 @extends('admin.layouts.app')
 @section('content')
-    @include('admin.order.box_chart_report')
+    @include('view_woocommerce::admin.order.box_chart_report')
 @endsection

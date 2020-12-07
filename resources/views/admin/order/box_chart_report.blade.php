@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-value-lg" id="totalRevenue">0 {{ config('constant.PRICE_UNIT') }}</div>
-                        <div><i class="icon fa fa-money"></i> {{ trans('sale_order.report.total_revenue') }}</div>
+                        <div><i class="icon fa fa-money"></i> {{ trans('lang_woocommerce::sale_order.report.total_revenue') }}</div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-gradient-success" role="progressbar"
                                  style="width: 100%"
@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-value-lg" id="totalRevenue7day">0 {{ config('constant.PRICE_UNIT') }}</div>
-                        <div><i class="icon fa fa-money"></i> {{ trans('sale_order.report.total_revenue_7day') }}
+                        <div><i class="icon fa fa-money"></i> {{ trans('lang_woocommerce::sale_order.report.total_revenue_7day') }}
                         </div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-gradient-primary" role="progressbar"
@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <div class="text-value-lg" id="totalOrderCompleted">0</div>
                         <div>
-                            <i class="nav-icon fa fa-shopping-cart"></i> {{ trans('sale_order.report.total_order_completed') }}
+                            <i class="nav-icon fa fa-shopping-cart"></i> {{ trans('lang_woocommerce::sale_order.report.total_order_completed') }}
                         </div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-gradient-info" role="progressbar"
@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <div class="text-value-lg" id="totalOrderNew">0</div>
                         <div>
-                            <i class="nav-icon fa fa-shopping-cart"></i> {{ trans('sale_order.report.total_order_news') }}
+                            <i class="nav-icon fa fa-shopping-cart"></i> {{ trans('lang_woocommerce::sale_order.report.total_order_news') }}
                         </div>
                         <div class="progress progress-xs my-2">
                             <div class="progress-bar bg-gradient-success" role="progressbar"
@@ -81,9 +81,9 @@
         });
 
         function loadChart() {
-            let title_main = '{{ trans('sale_order.report.title_main') }}';
-            let title_order = '{{ trans('sale_order.report.title_order') }}';
-            let title_total = '{{ trans('sale_order.report.title_total') }}';
+            let title_main = '{{ trans('lang_woocommerce::sale_order.report.title_main') }}';
+            let title_order = '{{ trans('lang_woocommerce::sale_order.report.title_order') }}';
+            let title_total = '{{ trans('lang_woocommerce::sale_order.report.title_total') }}';
             $.ajax({
                 url: '{{ admin_url('orders/get-report') }}',
                 dataType: 'json',

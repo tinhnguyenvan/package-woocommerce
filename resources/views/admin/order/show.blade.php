@@ -5,7 +5,7 @@
         <div id="ui-view">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <strong>{{ trans('sale_order.title_show') }} {{ $saleOrder->code }}</strong>
+                    <strong>{{ trans('lang_woocommerce::sale_order.title_show') }} {{ $saleOrder->code }}</strong>
                 </div>
                 <div class="card-body">
                     <div class="row mb-4">
@@ -29,15 +29,15 @@
                             <h6 class="mb-3">Details:</h6>
                             <div>Invoice: <strong>{{ $saleOrder->invoice_code }}</strong></div>
                             <div>
-                                {{ trans('sale_order.created_at') }}
+                                {{ trans('lang_woocommerce::sale_order.created_at') }}
                                 : {{ $saleOrder->created_at->format('d/m/Y H:s') }}
                             </div>
                             <div>
-                                {{ trans('sale_order.created_id') }}
+                                {{ trans('lang_woocommerce::sale_order.created_id') }}
                                 : {{ $saleOrder->creator_id > 0 ?  $saleOrder->user->fullname : '--' }}
                             </div>
                             <div>
-                                {{ trans('sale_order.status') }}
+                                {{ trans('lang_woocommerce::sale_order.status') }}
                                 :
                                 <span class="text text-{{ $saleOrder->status_color}}">{{ $saleOrder->status_text }}</span>
                             </div>
@@ -91,7 +91,7 @@
                             </tr>
                             @if($saleOrder->note)
                                 <tr class="bg-white">
-                                    <td colspan="2">{{ trans('sale_order.note') }}</td>
+                                    <td colspan="2">{{ trans('lang_woocommerce::sale_order.note') }}</td>
                                     <td colspan="4">{!!nl2br(str_replace(" ", " &nbsp;", $saleOrder->note))!!}</td>
                                 </tr>
                             @endif
@@ -135,7 +135,7 @@
                                     @endif
                                     <li>
                                         <button name="status" class="li-sale_order_status" value="{{ $item }}">
-                                            {{ trans('sale_order.status.'.$item) }}
+                                            {{ trans('lang_woocommerce::sale_order.status.'.$item) }}
                                         </button>
                                     </li>
                                 @endforeach

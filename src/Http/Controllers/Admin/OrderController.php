@@ -52,7 +52,7 @@ class OrderController extends AdminWoocommerceController
     public function create()
     {
         $data = [
-            'title' => trans('sale_order.title_create'),
+            'title' => trans('lang_woocommerce::sale_order.title_create'),
         ];
 
         return view('view_woocommerce::admin.order.form', $this->render($data));
@@ -122,7 +122,7 @@ class OrderController extends AdminWoocommerceController
                 }
             }
         } else {
-            $request->session()->flash('success', trans('sale_order.error_add_cart_empty'));
+            $request->session()->flash('success', trans('lang_woocommerce::sale_order.error_add_cart_empty'));
         }
 
         return back()->withInput();
@@ -133,7 +133,7 @@ class OrderController extends AdminWoocommerceController
         $myObject = SaleOrder::query()->findOrFail($id);
         $data = [
             'saleOrder' => $myObject,
-            'title' => trans('sale_order.code') . ' #' . $myObject->code,
+            'title' => trans('lang_woocommerce::sale_order.code') . ' #' . $myObject->code,
         ];
 
         return view('view_woocommerce::admin.order.show', $this->render($data));
@@ -148,7 +148,7 @@ class OrderController extends AdminWoocommerceController
             'admin'
         );
 
-        $request->session()->flash('success', trans('sale_order.resent_mail'));
+        $request->session()->flash('success', trans('lang_woocommerce::sale_order.resent_mail'));
 
         return back()->withInput();
     }
@@ -168,7 +168,7 @@ class OrderController extends AdminWoocommerceController
         $myObject->status = $status;
         $myObject->save();
 
-        $request->session()->flash('success', trans('sale_order.update_status_success'));
+        $request->session()->flash('success', trans('lang_woocommerce::sale_order.update_status_success'));
 
         return back();
     }
@@ -189,7 +189,7 @@ class OrderController extends AdminWoocommerceController
     public function report(Request $request)
     {
         $data = [
-            'title' => trans('sale_order.report'),
+            'title' => trans('lang_woocommerce::sale_order.report'),
         ];
 
         return view('view_woocommerce::admin.order.report', $this->render($data));

@@ -39,7 +39,7 @@ class ShoppingCart extends Mailable
     {
         return $this->to($this->data['email'])
             ->cc($this->data['email_cc'])
-            ->subject(trans('sale_order.subject.send_mail_customer'))
+            ->subject(trans('lang_woocommerce::sale_order.subject.send_mail_customer'))
             ->view('site.email.sale_order.send_mail_customer', $params);
     }
 
@@ -47,7 +47,7 @@ class ShoppingCart extends Mailable
     {
         return $this->to($this->data['email'])
             ->cc($this->data['email_cc'])
-            ->subject(trans('sale_order.subject.resend_mail_order'))
+            ->subject(trans('lang_woocommerce::sale_order.subject.resend_mail_order'))
             ->view('site.email.sale_order.resend_mail_order', $params);
     }
 }
