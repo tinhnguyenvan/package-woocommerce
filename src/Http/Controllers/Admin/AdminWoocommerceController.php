@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 class AdminWoocommerceController extends AdminController
 {
     public $page_number;
-    protected $data;
+    protected array $data;
     protected $theme = 'default';
 
     public function __construct()
