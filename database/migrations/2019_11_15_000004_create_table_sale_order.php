@@ -18,6 +18,7 @@ class CreateTableSaleOrder extends Migration
             $table->bigInteger('organization_id')->default(0)->nullable();
             $table->string('code', 50)->nullable()->default('');
             $table->bigInteger('customer_id')->default(0)->nullable();
+            $table->integer('member_id')->default(0)->nullable();
             $table->integer('sale_store_id')->default(0)->nullable();
             $table->integer('inventory_warehouse_id')->default(0)->nullable();
             $table->smallInteger('payment_method')->nullable()->default(0);
