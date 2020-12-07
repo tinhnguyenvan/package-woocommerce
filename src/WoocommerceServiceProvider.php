@@ -18,6 +18,9 @@ class WoocommerceServiceProvider extends ServiceProvider
 
         // config
         if ($this->app->runningInConsole()) {
+            // load migration
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
             // install package
             $this->commands(
                 [
@@ -34,12 +37,12 @@ class WoocommerceServiceProvider extends ServiceProvider
             );
 
             // public migrations
-            $this->publishes(
-                [
-                    __DIR__ . '/../database/migrations' => database_path('migrations'),
-                ],
-                'migrations'
-            );
+//            $this->publishes(
+//                [
+//                    __DIR__ . '/../database/migrations' => database_path('migrations'),
+//                ],
+//                'migrations'
+//            );
 
             $this->publishes(
                 [

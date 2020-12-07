@@ -13,7 +13,7 @@ class CreateTableSaleOrder extends Migration
      */
     public function up()
     {
-        Schema::create('sale_order', function (Blueprint $table) {
+        Schema::create('woo_sale_order', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('organization_id')->default(0)->nullable();
             $table->string('code', 50)->nullable()->default('');
@@ -75,6 +75,6 @@ class CreateTableSaleOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sale_order');
+        Schema::dropIfExists('woo_sale_order');
     }
 }

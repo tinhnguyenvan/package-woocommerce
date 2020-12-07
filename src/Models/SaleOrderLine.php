@@ -11,7 +11,7 @@ class SaleOrderLine extends Model
      *
      * @var string
      */
-    protected $table = 'sale_order_line';
+    protected $table = 'woo_sale_order_line';
 
     /**
      * Attributes that should be mass-assignable.

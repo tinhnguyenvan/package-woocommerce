@@ -13,7 +13,7 @@ class CreateTableSaleOrderLine extends Migration
      */
     public function up()
     {
-        Schema::create('sale_order_line', function (Blueprint $table) {
+        Schema::create('woo_sale_order_line', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('organization_id')->default(0)->nullable();
             $table->bigInteger('customer_id')->default(0)->nullable();
@@ -63,6 +63,6 @@ class CreateTableSaleOrderLine extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sale_order_line');
+        Schema::dropIfExists('woo_sale_order_line');
     }
 }

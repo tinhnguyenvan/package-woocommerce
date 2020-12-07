@@ -18,7 +18,7 @@ class CreateProduct extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('woo_products', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned()->autoIncrement();
             $table->string('sku', 255)->nullable();
             $table->string('title', 255)->nullable();
@@ -54,6 +54,6 @@ class CreateProduct extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('woo_products');
     }
 }

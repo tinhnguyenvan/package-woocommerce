@@ -14,7 +14,7 @@ class ProductImage extends Model
      *
      * @var string
      */
-    protected $table = 'product_images';
+    protected $table = 'woo_product_images';
 
     /**
      * Attributes that should be mass-assignable.

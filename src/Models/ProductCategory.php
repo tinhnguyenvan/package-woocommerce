@@ -25,7 +25,7 @@ class ProductCategory extends Model
      *
      * @var string
      */
-    protected $table = 'product_categories';
+    protected $table = 'woo_product_categories';
 
     /**
      * Attributes that should be mass-assignable.

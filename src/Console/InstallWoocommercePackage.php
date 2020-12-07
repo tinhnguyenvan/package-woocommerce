@@ -39,15 +39,6 @@ class InstallWoocommercePackage extends Command
             ]
         );
 
-        $this->call(
-            'vendor:publish',
-            [
-                '--provider' => "TinhPHP\Woocommerce\WoocommerceServiceProvider",
-                '--tag' => 'migrations',
-                '--force' => true
-            ]
-        );
-
         $this->info('Installed WoocommercePackage');
     }
 }

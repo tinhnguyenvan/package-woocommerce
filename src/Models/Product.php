@@ -29,7 +29,7 @@ class Product extends Model
      *
      * @var string
      */
-    protected $table = 'products';
+    protected $table = 'woo_products';
 
     /**
      * Attributes that should be mass-assignable.

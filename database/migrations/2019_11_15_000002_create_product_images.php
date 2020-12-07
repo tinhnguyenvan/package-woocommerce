@@ -13,7 +13,7 @@ class CreateProductImages extends Migration
      */
     public function up()
     {
-        Schema::create('product_images', function (Blueprint $table) {
+        Schema::create('woo_product_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('product_id')->default(0)->nullable();
             $table->integer('image_id')->default(0)->nullable();
@@ -37,6 +37,6 @@ class CreateProductImages extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('woo_product_images');
     }
 }

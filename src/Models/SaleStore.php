@@ -11,7 +11,7 @@ class SaleStore extends Model
      *
      * @var string
      */
-    protected $table = 'sale_store';
+    protected $table = 'woo_sale_store';
 
     /**
      * Attributes that should be mass-assignable.

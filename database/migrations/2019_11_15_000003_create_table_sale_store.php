@@ -14,7 +14,7 @@ class CreateTableSaleStore extends Migration
      */
     public function up()
     {
-        Schema::create('sale_store', function (Blueprint $table) {
+        Schema::create('woo_sale_store', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('organization_id')->default(0)->nullable();
             $table->string('code', 50)->nullable()->default('');
@@ -48,7 +48,7 @@ class CreateTableSaleStore extends Migration
             $table->engine = 'InnoDB';
         });
 
-        DB::table('sale_store')->insert([
+        DB::table('woo_sale_store')->insert([
             'id' => 1,
             'organization_id' => 1,
             'code' => 'SS01',
@@ -66,6 +66,6 @@ class CreateTableSaleStore extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sale_store');
+        Schema::dropIfExists('woo_sale_store');
     }
 }

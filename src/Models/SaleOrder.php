@@ -41,7 +41,7 @@ class SaleOrder extends Model
      *
      * @var string
      */
-    protected $table = 'sale_order';
+    protected $table = 'woo_sale_order';
 
     /**
      * Attributes that should be mass-assignable.
