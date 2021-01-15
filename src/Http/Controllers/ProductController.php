@@ -51,7 +51,7 @@ final class ProductController extends Controller
             return redirect(base_url('404.html'));
         }
 
-        Product::query()->increment('views');
+        Product::query()->where('id', $product->id)->increment('views');
 
         $items = Product::query()->where(['category_id' => $product->category_id])->orderByDesc('id')->paginate($this->page_number);
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
