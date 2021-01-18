@@ -26,7 +26,7 @@ use Illuminate\View\View;
  * @property ProductCategoryService $productCategoryService
  * @property MediaService $mediaService
  */
-class ProductController extends AdminWoocommerceController
+final class ProductController extends AdminWoocommerceController
 {
     public function __construct(
         ProductService $productService,
