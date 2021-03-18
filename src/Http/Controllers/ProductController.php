@@ -27,7 +27,7 @@ final class ProductController extends Controller
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
         if (empty($productCategory)) {
             $productCategory = (object) [
-                'title' => trans('layout_product1.category'),
+                'title' => trans('layout_product.category'),
             ];
 
             $this->productService->buildCondition($request->all(), $condition, $sortBy, $sortType);
