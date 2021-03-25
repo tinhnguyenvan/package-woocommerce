@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layout.app')
 @section('content')
 
     <form method="post" action="{{ admin_url('orders') }}">
