@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layout.app')
 @section('content')
 
     <div class="card">
@@ -52,7 +52,7 @@
                                 {{ $item->created_at->format(config('app.date_format')) }}
                             </td>
                             <td class="text-right">
-                                <form method="post" action="{{ admin_url('product_categories/'.$item->id ) }}">
+                                <form method="post" onsubmit="return confirm('Do you want DELETE ?');" action="{{ admin_url('product_categories/'.$item->id ) }}">
                                     @csrf
                                     @method('DELETE')
 
