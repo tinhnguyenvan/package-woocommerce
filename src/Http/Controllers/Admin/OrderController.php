@@ -6,6 +6,8 @@
 
 namespace TinhPHP\Woocommerce\Http\Controllers\Admin;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use TinhPHP\Woocommerce\Jobs\ShoppingCartJob;
 use TinhPHP\Woocommerce\Models\Product;
 use App\Models\RolePermission;
@@ -116,7 +118,7 @@ class OrderController extends AdminWoocommerceController
 
                     $request->session()->flash('success', trans('common.add.success'));
 
-                    return redirect(admin_url('orders'));
+                    return redirect(admin_url('woocommerce/orders'));
                 } catch (Exception $e) {
                     DB::rollBack();
                 }
@@ -139,14 +141,13 @@ class OrderController extends AdminWoocommerceController
         return view('view_woocommerce::admin.order.show', $this->render($data));
     }
 
-    public function resentMail(Request $request, $id)
+    public function resentMail(Request $request, $id): RedirectResponse
     {
         SaleOrder::query()->findOrFail($id);
 
         // push queue send mail
-        ShoppingCartJob::dispatch(['action' => ShoppingCartJob::ACTION_RESEND_EMAIL_ORDER, 'id' => $id])->onQueue(
-            'admin'
-        );
+        $paramsMail =  ['action' => ShoppingCartJob::ACTION_RESEND_EMAIL_ORDER, 'id' => $id];
+        ShoppingCartJob::dispatch($paramsMail);
 
         $request->session()->flash('success', trans('lang_woocommerce::sale_order.resent_mail'));
 
@@ -161,7 +162,7 @@ class OrderController extends AdminWoocommerceController
     {
     }
 
-    public function status(Request $request, $id)
+    public function status(Request $request, $id): RedirectResponse
     {
         $myObject = SaleOrder::query()->findOrFail($id);
         $status = $request['status'];
@@ -183,7 +184,7 @@ class OrderController extends AdminWoocommerceController
 
         $request->session()->flash('success', trans('common.delete.success'));
 
-        return redirect(admin_url('orders'));
+        return redirect(admin_url('woocommerce/orders'));
     }
 
     public function report(Request $request)
@@ -195,17 +196,17 @@ class OrderController extends AdminWoocommerceController
         return view('view_woocommerce::admin.order.report', $this->render($data));
     }
 
-    public function getReport()
+    public function getReport(): JsonResponse
     {
-        $total = DB::table('sale_order')
+        $total = SaleOrder::query()
             ->selectRaw('SUM(price_final) as total, MONTH(created_at) as month')
             ->where('status', SaleOrder::STATUS_COMPLETED)
-            ->groupBy(DB::raw('YEAR(created_at) DESC, MONTH(created_at) ASC'))->get()->toArray();
+            ->groupBy(DB::raw('MONTH(created_at)'))->get()->toArray();
 
-        $totalOrder = DB::table('sale_order')
+        $totalOrder = SaleOrder::query()
             ->selectRaw('COUNT(id) as total, MONTH(created_at) as month')
             ->where('status', SaleOrder::STATUS_COMPLETED)
-            ->groupBy(DB::raw('YEAR(created_at) DESC, MONTH(created_at) ASC'))->get()->toArray();
+            ->groupBy(DB::raw('MONTH(created_at)'))->get()->toArray();
 
         $totalRevenue = SaleOrder::query()->where('status', SaleOrder::STATUS_COMPLETED)->sum('price_final');
         $totalRevenue7day = SaleOrder::query()->whereRaw('DATE(created_at) > (NOW() - INTERVAL 7 DAY)')->where(

@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 
-    <form method="post" action="{{ admin_url('orders') }}">
+    <form method="post" action="{{ admin_url('woocommerce/orders') }}">
         <div class="row">
             <div class="col-9">
                 <div class="card">
@@ -124,4 +124,28 @@
             </div>
         </div>
     </form>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /**
+             * check all for all list data
+             */
+            if ($('#product_id').length > 0) {
+                let options = {
+                    url: function (keyword) {
+                        return configs.admin_url + '/woocommerce/api/products?keyword=' + keyword
+                    },
+                    getValue: "title",
+                    listLocation: "data",
+                    list: {
+                        onClickEvent: function () {
+                            let item = $("#product_id").getSelectedItemData();
+                            createItemOrder(item);
+                        }
+                    }
+                };
+
+                $("#product_id").easyAutocomplete(options);
+            }
+        })
+    </script>
 @endsection

@@ -6,7 +6,7 @@
             <i class="fa fa-align-justify"></i> {{ trans('common.list') }}
 
             <div class="card-header-actions">
-                <a class="btn btn-sm btn-primary" href="{{ admin_url('orders/create') }}">
+                <a class="btn btn-sm btn-primary" href="{{ admin_url('woocommerce/orders/create') }}">
                     <small>
                         <i class="fa fa-plus"></i>
                         {{trans('common.button.add')}}
@@ -18,7 +18,7 @@
         <div class="card-body">
             @include('admin.element.filter')
 
-            <form method="get" action="{{ admin_url('orders') }}">
+            <form method="get" action="{{ admin_url('woocommerce/orders') }}">
                 <table class="table table-responsive-sm table-bordered table-hover font12">
                     <thead>
                     <tr class="bg-light">
@@ -35,7 +35,7 @@
                     @if ($items->count() > 0)
                         @foreach ($items as $item)
                             <tr>
-                                <td><a href="{{ admin_url('orders/'.$item->id) }}">{{ $item->code }}</a></td>
+                                <td><a href="{{ admin_url('woocommerce/orders/'.$item->id) }}">{{ $item->code }}</a></td>
                                 <td>{{ $item->billing_fullname }}</td>
                                 <td>{{ $item->billing_phone }}</td>
                                 <td>{{ $item->created_at->format(config('app.date_format')) }}</td>

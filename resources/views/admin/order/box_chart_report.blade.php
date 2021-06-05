@@ -85,7 +85,7 @@
             let title_order = '{{ trans('lang_woocommerce::sale_order.report.title_order') }}';
             let title_total = '{{ trans('lang_woocommerce::sale_order.report.title_total') }}';
             $.ajax({
-                url: '{{ admin_url('orders/get-report') }}',
+                url: '{{ admin_url('woocommerce/orders/get-report') }}',
                 dataType: 'json',
                 success: function (result) {
                     $('#totalRevenue').text(result.total_revenue);

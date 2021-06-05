@@ -7,6 +7,7 @@
 namespace TinhPHP\Woocommerce\Http\Controllers\Admin;
 
 use App\Models\Media;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use TinhPHP\Woocommerce\Models\Product;
 use TinhPHP\Woocommerce\Models\ProductImage;
 use App\Models\RolePermission;
@@ -238,7 +239,7 @@ final class ProductController extends AdminWoocommerceController
      * @param Request $request
      * @return RedirectResponse
      */
-    public function destroyMulti(Request $request)
+    public function destroyMulti(Request $request): RedirectResponse
     {
         $params = $request->all();
 
@@ -253,5 +254,24 @@ final class ProductController extends AdminWoocommerceController
         }
 
         return back();
+    }
+
+    /**
+     * api product get list
+     */
+    public function apiProduct(Request $request): LengthAwarePaginator
+    {
+        $params = $request->only('keyword');
+
+        $object = Product::query();
+
+        if (!empty($params['keyword'])) {
+            $object->where('title', 'like', $params['keyword'] . '%');
+            $object->orWhere('sku', 'like', $params['keyword'] . '%');
+        }
+
+        $column = ['id', 'sku', 'title', 'price', 'price_promotion'];
+
+        return $object->orderBy('id', 'desc')->select($column)->paginate(20);
     }
 }

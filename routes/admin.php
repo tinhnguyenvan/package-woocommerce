@@ -21,6 +21,9 @@ Route::group(
         Route::delete('products/destroy-multi', [ProductController::class, 'destroyMulti'])->name('admin.products.destroy-multi');
         Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
 
+        // api product
+        Route::get('api/products', [ProductController::class, 'apiProduct'])->name('admin.api.products.index');
+
         // product_categories
         Route::get('product_categories', [ProductCategoryController::class, 'index'])->name('admin.product_categories.index');
         Route::get('product_categories/create', [ProductCategoryController::class, 'create'])->name('admin.product_categories.create');

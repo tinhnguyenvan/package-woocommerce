@@ -4,7 +4,7 @@
         <div class="col-lg-12">
 
             <form method="POST" enctype="multipart/form-data"
-                  action="{{ admin_url('product_categories') }}{{ ($product_category->id ?? 0) > 0 ?'/'.$product_category->id: '' }}">
+                  action="{{ admin_url('woocommerce/product_categories') }}{{ ($product_category->id ?? 0) > 0 ?'/'.$product_category->id: '' }}">
                 @csrf
                 @if (!empty($product_category->id))
                     @method('PUT')
@@ -58,7 +58,7 @@
                 <div class="row mb-5">
                     <div class="col-lg-12">
                         <div class="form-actions text-lg-right">
-                            <form method="POST" onsubmit="return confirm('Do you want DELETE ?');" action="{{ admin_url('product_categories/'.$product_category->id ) }}">
+                            <form method="POST" onsubmit="return confirm('Do you want DELETE ?');" action="{{ admin_url('woocommerce/product_categories/'.$product_category->id ) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">

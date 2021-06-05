@@ -2,13 +2,12 @@
 
 namespace TinhPHP\Woocommerce\Http\Controllers;
 
-use App\Jobs\ShoppingCartJob;
-use TinhPHP\Woocommerce\Models\Product;
 use App\Models\RolePermission;
-use App\Models\SaleOrder;
-use App\Models\SaleStore;
-use App\Services\SaleOrderLineService;
-use App\Services\SaleOrderService;
+use TinhPHP\Woocommerce\Models\Product;
+use TinhPHP\Woocommerce\Models\SaleOrder;
+use TinhPHP\Woocommerce\Models\SaleStore;
+use TinhPHP\Woocommerce\Services\SaleOrderLineService;
+use TinhPHP\Woocommerce\Services\SaleOrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -136,10 +135,8 @@ final class CartController extends Controller
 
             if ($orderId > 0) {
                 // push queue send mail
-                ShoppingCartJob::dispatch(
+                \TinhPHP\Woocommerce\Jobs\ShoppingCartJob::dispatch(
                     ['action' => ShoppingCartJob::ACTION_SEND_MAIL_CUSTOMER, 'id' => $orderId]
-                )->onQueue(
-                    'admin'
                 );
             }
             DB::commit();

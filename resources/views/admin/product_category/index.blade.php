@@ -6,7 +6,7 @@
             <i class="fa fa-align-justify"></i> {{ trans('common.list') }}
 
             <div class="card-header-actions">
-                <a class="btn btn-sm btn-primary" href="{{ admin_url('product_categories/create') }}">
+                <a class="btn btn-sm btn-primary" href="{{ admin_url('woocommerce/product_categories/create') }}">
                     <small>
                         <i class="fa fa-plus"></i>
                         {{trans('common.button.add')}}
@@ -32,7 +32,7 @@
                     @foreach ($items as $item)
                         <tr data-node-id="{{$item->id}}" data-node-pid="{{$item->parent_id}}">
                             <td>
-                                <a href="{{ admin_url('product_categories/'.$item->id.'/edit') }}">
+                                <a href="{{ admin_url('woocommerce/product_categories/'.$item->id.'/edit') }}">
                                     {{ $item->title }}
                                     <i class="fa fa-edit"></i>
                                 </a>
@@ -56,7 +56,7 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <a href="{{ admin_url('product_categories/create?parent_id='.$item->id) }}"
+                                    <a href="{{ admin_url('woocommerce/product_categories/create?parent_id='.$item->id) }}"
                                        class="btn btn-sm btn-primary">
                                         <i class="fa fa-sitemap"></i> {{ trans('nav.add_menu_child') }}
                                     </a>

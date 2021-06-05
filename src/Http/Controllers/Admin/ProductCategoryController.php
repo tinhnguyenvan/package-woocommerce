@@ -78,7 +78,7 @@ class ProductCategoryController extends AdminWoocommerceController
 
                 $request->session()->flash('success', trans('common.add.success'));
 
-                return redirect(admin_url('product_categories'), 302);
+                return redirect(admin_url('woocommerce/product_categories'), 302);
             } else {
                 $request->session()->flash('error', $result['message']);
             }
@@ -89,7 +89,7 @@ class ProductCategoryController extends AdminWoocommerceController
 
     public function show($id)
     {
-        return redirect(admin_url('product_categories/' . $id . '/edit'), 302);
+        return redirect(admin_url('woocommerce/product_categories/' . $id . '/edit'), 302);
     }
 
     public function edit($id)
@@ -139,7 +139,7 @@ class ProductCategoryController extends AdminWoocommerceController
 
                 $request->session()->flash('success', trans('common.edit.success'));
 
-                return redirect(admin_url('product_categories'), 302);
+                return redirect(admin_url('woocommerce/product_categories'), 302);
             } else {
                 $request->session()->flash('error', $result['message']);
             }
@@ -162,6 +162,6 @@ class ProductCategoryController extends AdminWoocommerceController
             $request->session()->flash('success', trans('common.delete.success'));
         }
 
-        return redirect(admin_url('product_categories'));
+        return redirect(admin_url('woocommerce/product_categories'));
     }
 }

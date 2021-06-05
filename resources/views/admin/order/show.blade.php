@@ -111,7 +111,7 @@
                     </a>
 
                     <form style="display: inline-block"
-                          action="{{ admin_url('orders/resent-mail/'.$saleOrder->id) }}" method="post">
+                          action="{{ admin_url('woocommerce/orders/resent-mail/'.$saleOrder->id) }}" method="post">
                         @csrf
                         <button class="btn btn-warning">
                             <i class="fa fa-telegram" aria-hidden="true"></i> Resend mail
@@ -119,7 +119,7 @@
                     </form>
 
                     <form style="display: inline-block"
-                          action="{{ admin_url('orders/status/'.$saleOrder->id) }}" method="post">
+                          action="{{ admin_url('woocommerce/orders/status/'.$saleOrder->id) }}" method="post">
                         @csrf
                         <div class="btn-group">
                             <button type="button"
@@ -129,7 +129,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                @foreach(\App\Models\SaleOrder::STATUS_LIST as $item)
+                                @foreach(\TinhPHP\Woocommerce\Models\SaleOrder::STATUS_LIST as $item)
                                     @if($saleOrder->status == $item)
                                         @continue;
                                     @endif
