@@ -3,6 +3,7 @@
 namespace TinhPHP\Woocommerce\Http\Controllers;
 
 use App\Models\RolePermission;
+use TinhPHP\Woocommerce\Jobs\ShoppingCartJob;
 use TinhPHP\Woocommerce\Models\Product;
 use TinhPHP\Woocommerce\Models\SaleOrder;
 use TinhPHP\Woocommerce\Models\SaleStore;
