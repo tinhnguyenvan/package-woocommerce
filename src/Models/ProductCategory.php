@@ -3,11 +3,14 @@
 namespace TinhPHP\Woocommerce\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductCategory extends Model
 {
     use SoftDeletes;
+
     // use HasTranslations;
 
     public $translatable = ['title', 'summary', 'detail'];
@@ -32,7 +35,8 @@ class ProductCategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['parent_id',
+    protected $fillable = [
+        'parent_id',
         'title',
         'slug',
         'level',
@@ -70,22 +74,22 @@ class ProductCategory extends Model
      */
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class, 'parent_id', 'id');
     }
 
-    public function children()
+    public function children(): HasMany
     {
         return $this->hasMany(ProductCategory::class, 'id', 'parent_id');
     }
 
-    public function products()
+    public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'category_id', 'id');
     }
 
-    public static function dropDownStatus()
+    public static function dropDownStatus(): array
     {
         $data = self::STATUS_LIST;
 
@@ -97,7 +101,7 @@ class ProductCategory extends Model
         return $html;
     }
 
-    public static function link($data)
+    public static function link($data): string
     {
         $prefix = config('constant.URL_PREFIX_PRODUCT');
 
