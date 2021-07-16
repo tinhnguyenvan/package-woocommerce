@@ -39,7 +39,7 @@ final class CartController extends Controller
             'title' => trans('common.cart.title'),
         ];
 
-        return view('site/cart.index', $this->render($data));
+        return view('view_woocommerce::web.cart.index', $this->render($data));
     }
 
     public function checkout(Request $request, $token_checkout = '')
@@ -57,25 +57,25 @@ final class CartController extends Controller
             'title' => trans('common.cart.checkout'),
         ];
 
-        return view('site/cart.checkout', $this->render($data));
+        return view('view_woocommerce::web.cart.checkout', $this->render($data));
     }
 
-    public function checkoutSuccess(Request $request)
+    public function checkoutSuccess()
     {
         $data = [
             'title' => trans('common.cart.checkout.success'),
         ];
 
-        return view('site/cart.success', $this->render($data));
+        return view('view_woocommerce::web.cart.success', $this->render($data));
     }
 
-    public function checkoutError(Request $request)
+    public function checkoutError()
     {
         $data = [
             'title' => trans('common.cart.checkout.error'),
         ];
 
-        return view('site/cart.error', $this->render($data));
+        return view('view_woocommerce::web.cart.error', $this->render($data));
     }
 
     public function checkoutSave(Request $request)
@@ -136,7 +136,7 @@ final class CartController extends Controller
 
             if ($orderId > 0) {
                 // push queue send mail
-                \TinhPHP\Woocommerce\Jobs\ShoppingCartJob::dispatch(
+                ShoppingCartJob::dispatch(
                     ['action' => ShoppingCartJob::ACTION_SEND_MAIL_CUSTOMER, 'id' => $orderId]
                 );
             }

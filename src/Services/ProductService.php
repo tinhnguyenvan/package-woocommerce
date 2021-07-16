@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 /**
- * Class ProductService.
- *
  * @property Product $model
  */
 class ProductService extends BaseService

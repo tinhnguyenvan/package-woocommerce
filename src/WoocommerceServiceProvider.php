@@ -3,11 +3,12 @@
 namespace TinhPHP\Woocommerce;
 
 use App\Models\Plugin;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use TinhPHP\Woocommerce\Console\InstallWoocommercePackage;
+use Illuminate\Routing\Router;
+use TinhPHP\Woocommerce\Middleware\SettingMiddleware;
 
 class WoocommerceServiceProvider extends ServiceProvider
 {
@@ -62,6 +63,8 @@ class WoocommerceServiceProvider extends ServiceProvider
         }
 
         // route middleware
+        $router = $this->app->make(Router::class);
+        $router->aliasMiddleware('woo_setting', SettingMiddleware::class);
 
         // route
         // $this->registerRoutes();

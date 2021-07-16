@@ -11,8 +11,8 @@ class ShoppingCart extends Mailable
     use Queueable;
     use SerializesModels;
 
-    const ACTION_SEND_MAIL_CUSTOMER = 'send_mail_customer';
-    const ACTION_RESEND_MAIL_ORDER = 'resend_mail_order';
+    public const ACTION_SEND_MAIL_CUSTOMER = 'send_mail_customer';
+    public const ACTION_RESEND_MAIL_ORDER = 'resend_mail_order';
 
     protected $data;
 
@@ -35,19 +35,19 @@ class ShoppingCart extends Mailable
         }
     }
 
-    private function sendMailCustomer($params)
+    private function sendMailCustomer($params): ShoppingCart
     {
         return $this->to($this->data['email'])
             ->cc($this->data['email_cc'])
             ->subject(trans('lang_woocommerce::sale_order.subject.send_mail_customer'))
-            ->view('site.email.sale_order.send_mail_customer', $params);
+            ->view('view_woocommerce::web.email.sale_order.send_mail_customer', $params);
     }
 
-    private function resendMailOrder($params)
+    private function resendMailOrder($params): ShoppingCart
     {
         return $this->to($this->data['email'])
             ->cc($this->data['email_cc'])
             ->subject(trans('lang_woocommerce::sale_order.subject.resend_mail_order'))
-            ->view('site.email.sale_order.resend_mail_order', $params);
+            ->view('view_woocommerce::web.email.sale_order.resend_mail_order', $params);
     }
 }

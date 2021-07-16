@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use TinhPHP\Woocommerce\Http\Controllers\Admin\ProductCategoryController;
 use TinhPHP\Woocommerce\Http\Controllers\Admin\ProductController;
 use TinhPHP\Woocommerce\Http\Controllers\Admin\OrderController;
+use TinhPHP\Woocommerce\Http\Controllers\Admin\SettingController;
 
 Route::group(
     [
@@ -47,5 +48,9 @@ Route::group(
         Route::put('orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
         Route::patch('orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update.patch');
         Route::delete('orders/{id}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+
+        // settings
+        Route::get('settings', [SettingController::class, 'index'])->name('woo.admin.settings.index');
+        Route::post('settings/save', [SettingController::class, 'save'])->name('woo.admin.settings.save');
     }
 );

@@ -9,6 +9,6 @@ class Controller extends SiteController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'woo_setting']);
     }
 }

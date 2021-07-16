@@ -28,4 +28,6 @@ return [
     'parent_id' => 'Danh mục cha',
     'description' => 'Mô tả',
     'total_usage' => 'Lượt',
+    'setting.tab_general' => 'General',
+    'setting.currency' => 'Tiền tệ',
 ];

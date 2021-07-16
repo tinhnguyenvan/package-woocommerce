@@ -46,6 +46,12 @@ return [
                     'url' => 'woocommerce/orders/report',
                     'icon' => 'icon-chart',
                 ],
+                'nav.menu_left.settings' => [
+                    'title' => 'Setting',
+                    'plugin' => 'woocommerce',
+                    'url' => 'woocommerce/settings',
+                    'icon' => 'fa fa-cogs',
+                ],
             ]
         ],
     ]

@@ -1,14 +1,6 @@
-@extends('layout.'.$theme.'.layouts.app')
+@extends('site.layout.member')
 @section('content')
-    <article id="content" class="container">
-        <div class="main-breadcrumb">
-            <ol class="breadcrumb mt15">
-                <li>
-                    <a href="{{ base_url()}}">{{ trans('common.home') }}</a>
-                </li>
-                <li class="active hidden-xs">{{ trans('common.cart.title') }}</li>
-            </ol>
-        </div>
+    <article id="content" class="">
         <div class="row">
             <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="detail-view">
@@ -33,12 +25,12 @@
                                         <td>
                                             {{ $item->name }}
                                             <a href="{{ base_url('cart/delete/'.$item->id) }}"
-                                               class="btn btn-xs btn-danger">
-                                                <i class="fa fa-trash"></i>
+                                               class="btn btn-xs btn-small btn-danger">
+                                                <i class="fa fa-trash-o"></i>
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <input class="text-center" type="number" min="1"
+                                            <input class="text-center form-control"  type="number" min="1"
                                                    value="{{ $item->quantity }}">
                                         </td>
                                         <td class="text-center">
@@ -69,7 +61,7 @@
                     </div>
                     @if($items->count() > 0)
                         <div class="text-right" style="margin: 10px">
-                            <button class="btn btn-default">{{ trans('common.cart.btn_update_cart') }}</button>
+                            <button class="btn btn-secondary">{{ trans('common.cart.btn_update_cart') }}</button>
                             <button class="btn btn-primary">{{ trans('common.cart.btn_checkout') }}</button>
                         </div>
                     @endif

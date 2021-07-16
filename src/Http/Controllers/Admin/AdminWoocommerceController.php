@@ -13,6 +13,6 @@ class AdminWoocommerceController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware(['auth', 'auth.console', 'locale']);
+        $this->middleware(['auth', 'auth.console', 'locale', 'woo_setting']);
     }
 }

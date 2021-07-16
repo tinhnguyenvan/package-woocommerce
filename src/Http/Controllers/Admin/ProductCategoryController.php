@@ -16,8 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 /**
- * Class ProductCategoryController.
- *
  * @property ProductCategoryService $productCategoryService
  * @property MediaService $mediaService
  */

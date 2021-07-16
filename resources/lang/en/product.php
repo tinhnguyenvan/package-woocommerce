@@ -28,4 +28,7 @@ return [
     'parent_id' => 'Category parent',
     'description' => 'Description',
     'total_usage' => 'Usage',
+    'setting.tab_general' => 'General',
+    'setting.currency' => 'Currency',
+
 ];
