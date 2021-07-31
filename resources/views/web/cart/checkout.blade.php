@@ -242,7 +242,6 @@
 
 <script src="{{ asset("site/js/bootstrap.bundle.5.0.min.js") }}"></script>
 <script src="{{ asset("site/js/feather.min.js")}}"></script>
-<script src="{{ asset("site/js/dashboard.js") }}"></script>
 <script src="{{ asset("common/plugin/select2/js/select2.full.min.js") }}"></script>
 <script src="{{ asset("site/js/script.js") }}"></script>
 
