@@ -21,12 +21,13 @@ use Illuminate\Support\Facades\DB;
 
 /**
  *
- * @property SaleOrderService     $saleOrderService
+ * @property SaleOrderService $saleOrderService
  * @property SaleOrderLineService $saleOrderLineService
  */
 class OrderController extends AdminWoocommerceController
 {
-    public function __construct(SaleOrderService $saleOrderService, SaleOrderLineService $saleOrderLineService) {
+    public function __construct(SaleOrderService $saleOrderService, SaleOrderLineService $saleOrderLineService)
+    {
         parent::__construct();
         $this->middleware(['permission:' . RolePermission::PRODUCT_SHOW]);
         $this->saleOrderService = $saleOrderService;
@@ -142,7 +143,7 @@ class OrderController extends AdminWoocommerceController
         SaleOrder::query()->findOrFail($id);
 
         // push queue send mail
-        $paramsMail =  ['action' => ShoppingCartJob::ACTION_RESEND_EMAIL_ORDER, 'id' => $id];
+        $paramsMail = ['action' => ShoppingCartJob::ACTION_RESEND_EMAIL_ORDER, 'id' => $id];
         ShoppingCartJob::dispatch($paramsMail);
 
         $request->session()->flash('success', trans('lang_woocommerce::sale_order.resent_mail'));
@@ -232,7 +233,7 @@ class OrderController extends AdminWoocommerceController
             ->count();
 
         $dataChart = [
-            'total_revenue' => number_format($totalRevenue). ' ' . config('app.currency'),
+            'total_revenue' => number_format($totalRevenue) . ' ' . config('app.currency'),
             'total_revenue_7day' => number_format($totalRevenue7day) . ' ' . config('app.currency'),
             'total_order_new' => number_format($totalOrderNew),
             'total_order_completed' => number_format($totalOrderCompleted),
@@ -241,5 +242,33 @@ class OrderController extends AdminWoocommerceController
         ];
 
         return response()->json($dataChart);
+    }
+
+    public function apiOrderFindInfo(Request $request)
+    {
+        $status = 0;
+        $data = [];
+        $phone = $request->get('phone');
+        if (!empty($phone)) {
+            $select = [
+                'id',
+                'billing_phone',
+                'billing_email',
+                'billing_address',
+                'billing_fullname',
+            ];
+            $object = SaleOrder::query()->where('billing_phone', $phone)->orderByDesc('id')->first($select);
+
+            if (!empty($object->id)) {
+                $data = $object->toArray();
+                $status = 1;
+            }
+        }
+
+        $dataResponse = [
+            'status' => $status,
+            'data' => $data,
+        ];
+        return response()->json($dataResponse);
     }
 }

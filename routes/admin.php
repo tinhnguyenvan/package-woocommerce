@@ -25,6 +25,10 @@ Route::group(
         // api product
         Route::get('api/products', [ProductController::class, 'apiProduct'])->name('admin.api.products.index');
 
+        // api order
+        Route::get('api/orders/find-info', [OrderController::class, 'apiOrderFindInfo'])
+            ->name('admin.api.orders.find-info');
+
         // product_categories
         Route::get('product_categories', [ProductCategoryController::class, 'index'])->name('admin.product_categories.index');
         Route::get('product_categories/create', [ProductCategoryController::class, 'create'])->name('admin.product_categories.create');

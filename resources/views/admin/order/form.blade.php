@@ -3,10 +3,13 @@
 
     <form method="post" action="{{ admin_url('woocommerce/orders') }}">
         <div class="row">
-            <div class="col-9">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4>{{ trans('lang_woocommerce::sale_order.product') }}</h4>
+                        <h4>
+                            <i class="fa fa-cube"></i>
+                            {{ trans('lang_woocommerce::sale_order.product') }}
+                        </h4>
                         <hr/>
                         @csrf
 
@@ -20,41 +23,43 @@
                             <thead>
                             <tr>
                                 <th>{{ trans('lang_woocommerce::sale_order.product') }}</th>
-                                <th style="width: 100px" class="text-center">{{ trans('lang_woocommerce::sale_order.quantity') }}</th>
-                                <th style="width: 200px" class="text-center">{{ trans('lang_woocommerce::sale_order.price') }}</th>
-                                <th style="width: 200px" class="text-center">{{ trans('lang_woocommerce::sale_order.total') }}</th>
+                                <th style="width: 100px"
+                                    class="text-center">{{ trans('lang_woocommerce::sale_order.quantity') }}</th>
+                                <th style="width: 200px"
+                                    class="text-center">{{ trans('lang_woocommerce::sale_order.price') }}</th>
+                                <th style="width: 200px"
+                                    class="text-center">{{ trans('lang_woocommerce::sale_order.total') }}</th>
                             </tr>
                             </thead>
                             <tbody id="add-item-order">
 
                             </tbody>
                             <tfoot>
-                            <td class="text-right" colspan="3">
-                                <strong>{{ trans('lang_woocommerce::sale_order.total_final') }}</strong>
-                            </td>
-                            <td class="text-center">
-                                <span id="so_total_final">0</span>
-                            </td>
+                            <tr>
+                                <td class="text-right" colspan="3">
+                                    <strong>{{ trans('lang_woocommerce::sale_order.total_final') }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span id="so_total_final">0</span>
+                                </td>
+                            </tr>
                             </tfoot>
                         </table>
 
-                        <div class="form-group">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="fa fa-save"></i>
-                                {{ trans('lang_woocommerce::sale_order.title_create') }}
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4>{{ trans('lang_woocommerce::sale_order.billing_info') }}</h4>
+                        <h4>
+                            <i class="fa fa-user"></i>
+                            {{ trans('lang_woocommerce::sale_order.billing_info') }}
+                        </h4>
                         <hr/>
                         <div class="form-group">
-                            <label class="">{{ trans('common.fullname') }}</label>
+                            <label class=""><i class="fa fa-user-circle"></i> {{ trans('common.fullname') }}</label>
                             <div class="controls">
                                 <input class="form-control @error('billing_fullname') is-invalid @enderror"
                                        name="billing_fullname"
@@ -71,12 +76,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="">Email</label>
+                            <label class=""><i class="fa fa-envelope-o"></i> Email</label>
                             <div class="controls">
                                 <input class="form-control @error('billing_email') is-invalid @enderror"
                                        value="{{ old('billing_email') }}"
                                        required
                                        name="billing_email"
+                                       id="billing_email"
                                        type="email"
                                        autocomplete="off"
                                        placeholder="Email">
@@ -88,10 +94,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="">{{ trans('common.phone') }}</label>
+                            <label>
+                                <i class="fa fa-phone"></i> {{ trans('common.phone') }}
+                                <span class="text-info">(Input phone search info customer)</span>
+                            </label>
                             <div class="controls">
                                 <input class="form-control @error('billing_phone') is-invalid @enderror"
                                        name="billing_phone"
+                                       id="billing_phone"
                                        required
                                        value="{{ old('billing_phone') }}"
                                        placeholder="{{ trans('common.phone') }}/ Phonenumber"
@@ -103,10 +113,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="">{{ trans('common.address') }}</label>
+                            <label class=""><i class="fa fa-map"></i> {{ trans('common.address') }}</label>
                             <div class="controls">
                                 <input class="form-control"
                                        name="billing_address"
+                                       id="billing_address"
                                        value="{{ old('billing_address') }}"
                                        placeholder="{{ trans('common.address') }}/ Address"
                                        autocomplete="off">
@@ -114,10 +125,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="">{{ trans('common.note') }}</label>
+                            <label class=""><i class="fa fa-info"></i> {{ trans('common.note') }}</label>
                             <div class="controls">
-                                <textarea rows="4" class="form-control" name="note" placeholder="{{ trans('common.note') }}/ Note" autocomplete="off">{{ old('note') }}</textarea>
+                                <textarea rows="4" class="form-control" name="note"
+                                          placeholder="{{ trans('common.note') }}/ Note"
+                                          autocomplete="off">{{ old('note') }}</textarea>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-save"></i>
+                                {{ trans('lang_woocommerce::sale_order.title_create') }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -125,7 +145,21 @@
         </div>
     </form>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $('#billing_phone').on('blur', function () {
+                let phone = $(this).val();
+                $.ajax({
+                    url: configs.admin_url + '/woocommerce/api/orders/find-info?phone=' + phone,
+                    dataType: 'json',
+                    success: function (result) {
+                        if (parseInt(result.status) === 1) {
+                            $('#billing_fullname').val(result.data.billing_fullname);
+                            $('#billing_email').val(result.data.billing_email);
+                            $('#billing_address').val(result.data.billing_address);
+                        }
+                    }
+                });
+            });
             /**
              * check all for all list data
              */

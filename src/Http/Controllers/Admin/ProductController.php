@@ -258,6 +258,8 @@ final class ProductController extends AdminWoocommerceController
 
     /**
      * api product get list
+     * @param Request $request
+     * @return LengthAwarePaginator
      */
     public function apiProduct(Request $request): LengthAwarePaginator
     {
