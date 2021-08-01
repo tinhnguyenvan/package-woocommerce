@@ -37,6 +37,6 @@ class CreateWooSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aff_settings');
+        Schema::dropIfExists('woo_settings');
     }
 }

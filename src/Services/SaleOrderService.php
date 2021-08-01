@@ -157,8 +157,8 @@ class SaleOrderService extends BaseService
 
         if (!empty($data)) {
             foreach ($data as $value) {
-                if (array_key_exists($value->month, $item)) {
-                    $item[$value->month] = (int) $value->total;
+                if (array_key_exists($value['month'], $item)) {
+                    $item[$value['month']] = (int) $value['total'];
                 }
             }
 

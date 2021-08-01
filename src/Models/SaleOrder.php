@@ -2,6 +2,8 @@
 
 namespace TinhPHP\Woocommerce\Models;
 
+use App\Models\Member;
+use App\Models\User;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

@@ -20,17 +20,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class OrderController.
  *
  * @property SaleOrderService     $saleOrderService
  * @property SaleOrderLineService $saleOrderLineService
  */
 class OrderController extends AdminWoocommerceController
 {
-    public function __construct(
-        SaleOrderService $saleOrderService,
-        SaleOrderLineService $saleOrderLineService
-    ) {
+    public function __construct(SaleOrderService $saleOrderService, SaleOrderLineService $saleOrderLineService) {
         parent::__construct();
         $this->middleware(['permission:' . RolePermission::PRODUCT_SHOW]);
         $this->saleOrderService = $saleOrderService;
@@ -201,28 +197,43 @@ class OrderController extends AdminWoocommerceController
         $total = SaleOrder::query()
             ->selectRaw('SUM(price_final) as total, MONTH(created_at) as month')
             ->where('status', SaleOrder::STATUS_COMPLETED)
-            ->groupBy(DB::raw('MONTH(created_at)'))->get()->toArray();
+            ->where('created_at', '>=', date('Y-01-01 00:00:00'))
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->get()
+            ->toArray();
 
         $totalOrder = SaleOrder::query()
             ->selectRaw('COUNT(id) as total, MONTH(created_at) as month')
             ->where('status', SaleOrder::STATUS_COMPLETED)
-            ->groupBy(DB::raw('MONTH(created_at)'))->get()->toArray();
+            ->where('created_at', '>=', date('Y-01-01 00:00:00'))
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->get()
+            ->toArray();
 
-        $totalRevenue = SaleOrder::query()->where('status', SaleOrder::STATUS_COMPLETED)->sum('price_final');
-        $totalRevenue7day = SaleOrder::query()->whereRaw('DATE(created_at) > (NOW() - INTERVAL 7 DAY)')->where(
-            'status',
-            SaleOrder::STATUS_COMPLETED
-        )->sum('price_final');
+        $totalRevenue = SaleOrder::query()
+            ->where('status', SaleOrder::STATUS_COMPLETED)
+            ->where('created_at', '>=', date('Y-01-01 00:00:00'))
+            ->sum('price_final');
 
-        $totalOrderNew = SaleOrder::query()->whereIn(
-            'status',
-            [SaleOrder::STATUS_PROCESSING, SaleOrder::STATUS_NEW]
-        )->count();
-        $totalOrderCompleted = SaleOrder::query()->where('status', SaleOrder::STATUS_COMPLETED)->count();
+        $totalRevenue7day = SaleOrder::query()
+            ->whereRaw('DATE(created_at) > (NOW() - INTERVAL 7 DAY)')
+            ->where('status', SaleOrder::STATUS_COMPLETED)
+            ->where('created_at', '>=', date('Y-01-01 00:00:00'))
+            ->sum('price_final');
+
+        $totalOrderNew = SaleOrder::query()
+            ->whereIn('status', [SaleOrder::STATUS_PROCESSING, SaleOrder::STATUS_NEW])
+            ->where('created_at', '>=', date('Y-01-01 00:00:00'))
+            ->count();
+
+        $totalOrderCompleted = SaleOrder::query()
+            ->where('status', SaleOrder::STATUS_COMPLETED)
+            ->where('created_at', '>=', date('Y-01-01 00:00:00'))
+            ->count();
 
         $dataChart = [
-            'total_revenue' => number_format($totalRevenue),
-            'total_revenue_7day' => number_format($totalRevenue7day) . ' ' . config('constant.PRICE_UNIT'),
+            'total_revenue' => number_format($totalRevenue). ' ' . config('app.currency'),
+            'total_revenue_7day' => number_format($totalRevenue7day) . ' ' . config('app.currency'),
             'total_order_new' => number_format($totalOrderNew),
             'total_order_completed' => number_format($totalOrderCompleted),
             'total' => $this->saleOrderService->convertHighChart($total),
