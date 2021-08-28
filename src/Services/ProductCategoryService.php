@@ -28,7 +28,7 @@ class ProductCategoryService extends BaseService
      *
      * @return array
      */
-    public function validator($params)
+    public function validator($params): array
     {
         $error = [];
 
@@ -109,7 +109,7 @@ class ProductCategoryService extends BaseService
     /**
      * @return array
      */
-    public function dropdown()
+    public function dropdown(): array
     {
         $data = ProductCategory::query()->orderByRaw('CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id')->get();
         $html = [];
@@ -125,7 +125,7 @@ class ProductCategoryService extends BaseService
     /**
      * @return object
      */
-    public static function itemMenu()
+    public static function itemMenu(): object
     {
         return ProductCategory::query()->orderByRaw('CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id')->get();
     }
