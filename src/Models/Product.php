@@ -85,6 +85,11 @@ class Product extends Model
      */
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
     /**
      * @return BelongsTo
      */

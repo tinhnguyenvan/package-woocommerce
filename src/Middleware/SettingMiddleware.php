@@ -11,6 +11,7 @@ class SettingMiddleware
         // load config from database
         $keyConfig = [
             'currency',
+            'seo_title',
         ];
         $loadConfig = Setting::query()
             ->whereIn('name', $keyConfig)
@@ -21,6 +22,7 @@ class SettingMiddleware
 
         // facebook
         config(['app.currency' => $config['currency'] ?? 'VND']);
+        config(['app.woocommerce.seo_title' => $config['seo_title'] ?? '']);
 
         return $next($request);
     }

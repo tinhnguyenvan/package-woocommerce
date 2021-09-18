@@ -27,11 +27,11 @@ final class ProductController extends Controller
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
         if (empty($productCategory)) {
             $productCategory = (object) [
-                'title' => trans('layout_product.category'),
+                'title' => config('app.woocommerce.seo_title'),
             ];
 
             $this->productService->buildCondition($request->all(), $condition, $sortBy, $sortType);
-            $items = Product::query()->where($condition)->orderBy($sortBy, $sortType)->paginate(config('constant.PAGE_NUMBER'));
+            $items = Product::active()->where($condition)->orderBy($sortBy, $sortType)->paginate(config('constant.PAGE_NUMBER'));
         }
 
         $data = [
@@ -39,7 +39,6 @@ final class ProductController extends Controller
             'items' => $items,
             'title' => $productCategory->title,
         ];
-
         return view($this->layout . 'product.index', $this->render($data));
     }
 
@@ -53,7 +52,7 @@ final class ProductController extends Controller
 
         Product::query()->where('id', $product->id)->increment('views');
 
-        $items = Product::query()->where(['category_id' => $product->category_id])->orderByDesc('id')->paginate($this->page_number);
+        $items = Product::active()->where(['category_id' => $product->category_id])->orderByDesc('id')->paginate($this->page_number);
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
 
         $data = [
