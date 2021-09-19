@@ -34,6 +34,7 @@
 
                         <th class="th-category_id">{{ trans('lang_woocommerce::product.category_id') }}</th>
                         <th>{{ trans('lang_woocommerce::product.price') }}</th>
+                        <th>{{ trans('lang_woocommerce::product.views') }}</th>
                         <th>{{ trans('lang_woocommerce::product.created_at') }}</th>
                         <th>{{ trans('lang_woocommerce::product.image_url') }}</th>
                         <th class="th-status text-center">{{ trans('lang_woocommerce::product.status') }}</th>
@@ -61,9 +62,13 @@
                                 <td data-price="{{ $item->price }}">
                                     {{ $item->price_format }}
                                 </td>
+                                <td class="text-center">
+                                    {{ number_format($item->views) }}
+                                </td>
                                 <td>
                                     {{ $item->created_at->format(config('app.date_format')) }}
                                 </td>
+
                                 <td class="text-center">
                                     @if($item->image_url)
                                         <img src="{{ asset('storage'.$item->image_url) }}"

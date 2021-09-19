@@ -29,6 +29,7 @@ return [
     'description' => 'Description',
     'total_usage' => 'Usage',
     'link_demo' => 'Link demo',
+    'views' => 'Views',
 
     // setting
     'setting.tab_general' => 'General',

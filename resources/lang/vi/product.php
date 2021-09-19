@@ -29,6 +29,7 @@ return [
     'description' => 'Mô tả',
     'total_usage' => 'Lượt',
     'link_demo' => 'Link demo',
+    'views' => 'Views',
 
     // setting
     'setting.tab_general' => 'General',
