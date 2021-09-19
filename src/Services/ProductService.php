@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use TinhPHP\Woocommerce\Models\ProductMeta;
 
 /**
  * @property Product $model
@@ -88,6 +89,8 @@ class ProductService extends BaseService
         $myObject = new Product($params);
 
         if ($myObject->save($params)) {
+            ProductMeta::insertOrUpdateMeta($params['meta_key'] ?? [], $myObject->id);
+
             PostTag::insertOrUpdateTags($myObject->tags, PostTag::SOURCE_PRODUCT, $myObject->id);
 
             return $myObject;
@@ -114,6 +117,7 @@ class ProductService extends BaseService
         $myObject = Product::query()->findOrFail($id);
         $result = $myObject->update($params);
         if ($result) {
+            ProductMeta::insertOrUpdateMeta($params['meta_key'] ?? [], $myObject->id);
             PostTag::insertOrUpdateTags($myObject->tags, PostTag::SOURCE_PRODUCT, $myObject->id);
         }
 

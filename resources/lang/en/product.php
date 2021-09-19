@@ -28,7 +28,9 @@ return [
     'parent_id' => 'Category parent',
     'description' => 'Description',
     'total_usage' => 'Usage',
+    'link_demo' => 'Link demo',
+
+    // setting
     'setting.tab_general' => 'General',
     'setting.currency' => 'Currency',
-
 ];

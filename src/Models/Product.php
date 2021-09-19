@@ -109,7 +109,7 @@ class Product extends Model
 
         $html = [];
         foreach ($data as $value) {
-            $html[$value] = trans('lang_woocommerce::product.status.' . $value);
+            $html[$value] = trans('lang_woocommerce::product.status.'.$value);
         }
 
         return $html;
@@ -117,11 +117,11 @@ class Product extends Model
 
     public static function link($item)
     {
-        $prefix = config('constant.URL_PREFIX_PRODUCT') . '/';
+        $prefix = config('constant.URL_PREFIX_PRODUCT').'/';
 
         $prefix .= $item->category->slug ?? 'no-category';
 
-        return base_url($prefix . '/' . $item->slug . '.html');
+        return base_url($prefix.'/'.$item->slug.'.html');
     }
 
     /**
@@ -185,10 +185,22 @@ class Product extends Model
 
     public function getLinkAttribute()
     {
-        $prefix = config('constant.URL_PREFIX_PRODUCT') . '/';
+        $prefix = config('constant.URL_PREFIX_PRODUCT').'/';
 
         $prefix .= $this->category->slug ?? 'no-category';
 
-        return base_url($prefix . '/' . $this->slug . '.html');
+        return base_url($prefix.'/'.$this->slug.'.html');
+    }
+
+    /**
+     * coloumn name: meta
+     *
+     * @return array
+     */
+    public function getMetaAttribute()
+    {
+        $items = ProductMeta::query()->where('product_id', $this->id)->get();
+
+        return $items->pluck('meta_value', 'meta_key')->all();
     }
 }
