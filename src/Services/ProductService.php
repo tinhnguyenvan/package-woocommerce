@@ -64,13 +64,17 @@ class ProductService extends BaseService
             $formData['creator_id'] = Auth::id() ?? 0;
             $countSlug = Product::query()->where('slug', $formData['slug'])->count();
             if ($countSlug > 0) {
-                $formData['slug'] .= '-' . $countSlug;
+                $formData['slug'] .= '-'.$countSlug;
             }
         } else {
             $formData['editor_id'] = Auth::id() ?? 0;
         }
 
         $formData['is_home'] = !empty($formData['is_home']) ? 1 : 0;
+
+        if (empty($formData['seo_description'])) {
+            $formData['seo_description'] = Str::limit($formData['summary'], 160);
+        }
     }
 
     /**
@@ -125,7 +129,7 @@ class ProductService extends BaseService
     }
 
     /**
-     * @param array $params
+     * @param  array  $params
      *
      * @return array
      */
@@ -172,7 +176,7 @@ class ProductService extends BaseService
 
         if (!empty($params['search'])) {
             $search = [
-                ['title', 'like', $params['search'] . '%'],
+                ['title', 'like', $params['search'].'%'],
             ];
 
             if (empty($condition)) {
@@ -196,7 +200,7 @@ class ProductService extends BaseService
 
         $tags = explode(',', $tags);
         foreach ($tags as $tag) {
-            $html[] = '<a href="' . base_url('tag/' . Str::slug((string) $tag)) . '">' . $tag . '</a>';
+            $html[] = '<a href="'.base_url('tag/'.Str::slug((string) $tag)).'">'.$tag.'</a>';
         }
 
         return !empty($html) ? implode(PHP_EOL, $html) : '';
@@ -214,9 +218,10 @@ class ProductService extends BaseService
 
         return Product::query()->where($condition)
             ->whereHas('category', function (Builder $query) use ($slugCategory) {
-                $query->where('slug', $slugCategory)->orWhereHas('children', function (Builder $query) use ($slugCategory) {
-                    $query->where('slug', $slugCategory);
-                });
+                $query->where('slug', $slugCategory)->orWhereHas('children',
+                    function (Builder $query) use ($slugCategory) {
+                        $query->where('slug', $slugCategory);
+                    });
             })->with('category.children')->orderBy($sortBy, $sortType)->paginate(config('constant.PAGE_NUMBER'));
     }
 
