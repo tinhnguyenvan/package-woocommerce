@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <form method="post" enctype="multipart/form-data"
+            <form method="post" class="submit" enctype="multipart/form-data"
                   action="{{ admin_url('woocommerce/products') }}{{ ($product->id ?? 0) > 0 ?'/'.$product->id: '' }}">
                 @csrf
                 @if (!empty($product->id))
@@ -66,14 +66,7 @@
 
                         @include('admin.element.form.textarea', ['name' => 'summary', 'text' => trans('lang_woocommerce::product.summary'), 'value' => $product->summary ?? ''])
 
-                        <div class="form-group">
-                            <label class="col-form-label"
-                                   for="detail">{{ trans('lang_woocommerce::product.detail') }}</label>
-                            <div class="controls">
-                                <textarea class="form-control ckeditor" id="detail"
-                                          name="detail">{{ old('detail', $product->detail ?? '') }}</textarea>
-                            </div>
-                        </div>
+                        @include('admin.element.form.textarea', ['name' => 'detail', 'class' => 'ckeditor', 'text' => trans('lang_woocommerce::product.detail'), 'value' =>  $product->detail ?? ''])
 
                         <div class="nav-tabs-boxed">
                             <ul class="nav nav-tabs" role="tablist">
