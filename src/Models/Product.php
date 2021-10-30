@@ -4,6 +4,7 @@ namespace TinhPHP\Woocommerce\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use willvincent\Rateable\Rateable;
 
@@ -93,17 +94,17 @@ class Product extends Model
     /**
      * @return BelongsTo
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class, 'category_id', 'id');
     }
 
-    public function images()
+    public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class);
     }
 
-    public static function dropDownStatus()
+    public static function dropDownStatus(): array
     {
         $data = self::STATUS_LIST;
 
