@@ -39,7 +39,7 @@ final class ProductController extends Controller
             'items' => $items,
             'title' => $productCategory->title,
         ];
-        return view($this->layout . 'product.index', $this->render($data));
+        return view($this->layout . '.product.index', $this->render($data));
     }
 
     public function view(Request $request, $slugCategory, $slugProduct)
@@ -65,6 +65,6 @@ final class ProductController extends Controller
         // set seo
         $this->seo($product, $this->data);
 
-        return view($this->layout . 'product.view', $this->render($data));
+        return view($this->layout . '.product.view', $this->render($data));
     }
 }
