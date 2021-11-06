@@ -89,7 +89,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="8">
+                            <td colspan="9">
                                 {{ trans('common.data_empty') }}
                             </td>
                         </tr>
@@ -98,7 +98,7 @@
 
                     <tfoot>
                     <tr>
-                        <td colspan="8">
+                        <td colspan="9">
                             @include('admin.element.button.delete_multi')
                         </td>
                     </tr>
