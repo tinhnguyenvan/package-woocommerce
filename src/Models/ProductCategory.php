@@ -101,10 +101,10 @@ class ProductCategory extends Model
         return $html;
     }
 
-    public static function link($data): string
+    public function getLinkAttribute(): string
     {
         $prefix = config('constant.URL_PREFIX_PRODUCT');
 
-        return base_url($prefix . '/' . $data['slug']);
+        return base_url($prefix . '/' . $this->slug);
     }
 }

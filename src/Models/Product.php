@@ -130,7 +130,7 @@ class Product extends Model
      *
      * @return string
      */
-    public function getStatusTextAttribute()
+    public function getStatusTextAttribute(): string
     {
         switch ($this->status) {
             case self::STATUS_DISABLE:
@@ -152,7 +152,7 @@ class Product extends Model
      *
      * @return string
      */
-    public function getStatusColorAttribute()
+    public function getStatusColorAttribute(): string
     {
         switch ($this->status) {
             case self::STATUS_DISABLE:
@@ -174,7 +174,7 @@ class Product extends Model
      *
      * @return string
      */
-    public function getPriceFormatAttribute()
+    public function getPriceFormatAttribute(): string
     {
         $text = '--';
         if ($this->price > 0) {
@@ -184,7 +184,7 @@ class Product extends Model
         return $text;
     }
 
-    public function getLinkAttribute()
+    public function getLinkAttribute(): string
     {
         $prefix = config('constant.URL_PREFIX_PRODUCT').'/';
 
@@ -198,7 +198,7 @@ class Product extends Model
      *
      * @return array
      */
-    public function getMetaAttribute()
+    public function getMetaAttribute(): array
     {
         $items = ProductMeta::query()->where('product_id', $this->id)->get();
 
