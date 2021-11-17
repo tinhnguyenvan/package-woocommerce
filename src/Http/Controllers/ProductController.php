@@ -18,6 +18,8 @@ final class ProductController extends Controller
     {
         parent::__construct();
         $this->productService = $productService;
+
+        $this->data['is_product'] = 1;
     }
 
     public function index(Request $request, $slugCategory = '')
@@ -35,6 +37,7 @@ final class ProductController extends Controller
         }
 
         $data = [
+            'is_product_list' => 1,
             'productCategory' => $productCategory,
             'items' => $items,
             'title' => $productCategory->title,
@@ -56,6 +59,7 @@ final class ProductController extends Controller
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
 
         $data = [
+            'is_product_detail' => 1,
             'title' => $product->title,
             'product' => $product,
             'productCategory' => $productCategory,

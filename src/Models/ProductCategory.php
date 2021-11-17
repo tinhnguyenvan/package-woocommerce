@@ -107,4 +107,20 @@ class ProductCategory extends Model
 
         return base_url($prefix . '/' . $this->slug);
     }
+
+    /**
+     * name: full_image_url
+     *
+     * @return string
+     */
+    public function getFullImageUrlAttribute(): string
+    {
+        if ($this->image_id > 0) {
+            return asset('storage'.$this->image_url);
+        } elseif (!empty($this->image_url)) {
+            return $this->image_url;
+        } else {
+            return asset('site/img/empty.svg');
+        }
+    }
 }
