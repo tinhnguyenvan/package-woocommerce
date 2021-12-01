@@ -24,28 +24,40 @@ final class ProductController extends Controller
 
     public function index(Request $request, $slugCategory = '')
     {
+        $viewSubCate = false;
         $items = $this->productService->getProductBySlugCategory($slugCategory, $request->all());
-
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
         if (empty($productCategory)) {
-            $productCategory = (object) [
+            $productCategory = (object)[
                 'title' => config('app.woocommerce.seo_title'),
             ];
 
             $this->productService->buildCondition($request->all(), $condition, $sortBy, $sortType);
-            $items = Product::active()->where($condition)->orderBy($sortBy, $sortType)->paginate(config('constant.PAGE_NUMBER'));
+
+            $items = Product::active()
+                ->where($condition)
+                ->orderBy($sortBy, $sortType)
+                ->paginate(config('constant.PAGE_NUMBER'));
+        } elseif ($productCategory->children->count() > 0 && env('PACKAGE_WOO_PRODUCT_CATEGORY_SUB', false)) {
+            $viewSubCate = true;
         }
 
         $data = [
             'is_product_list' => 1,
+            'is_sub_category' => $viewSubCate,
             'productCategory' => $productCategory,
             'items' => $items,
             'title' => $productCategory->title,
         ];
+
+        if ($viewSubCate) {
+            return view($this->layout . '.product.cate', $this->render($data));
+        }
+
         return view($this->layout . '.product.index', $this->render($data));
     }
 
-    public function view(Request $request, $slugCategory, $slugProduct)
+    public function view($slugCategory, $slugProduct)
     {
         $product = Product::query()->where('slug', $slugProduct)->first();
 
@@ -55,7 +67,9 @@ final class ProductController extends Controller
 
         Product::query()->where('id', $product->id)->increment('views');
 
-        $items = Product::active()->where(['category_id' => $product->category_id])->orderByDesc('id')->paginate($this->page_number);
+        $items = Product::active()->where(['category_id' => $product->category_id])->orderByDesc('id')->paginate(
+            $this->page_number
+        );
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
 
         $data = [
