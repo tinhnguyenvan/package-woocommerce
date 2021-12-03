@@ -35,6 +35,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4 col-xs-12">
                                 @include('admin.element.form.input', ['name' => 'sku', 'text' => trans('lang_woocommerce::product.sku'), 'value' => $product->sku ?? ''])
                             </div>

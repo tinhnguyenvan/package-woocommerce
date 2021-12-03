@@ -32,7 +32,9 @@ class ProductCategoryController extends AdminWoocommerceController
     public function index(Request $request)
     {
         $this->productCategoryService->buildCondition($request->all(), $condition, $sortBy, $sortType);
-        $items = ProductCategory::query()->where($condition)->orderByRaw('CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id')->get();
+        $items = ProductCategory::query()->where($condition)->orderByRaw(
+            'CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id'
+        )->get();
 
         $data = [
             'items' => $items,
@@ -92,9 +94,13 @@ class ProductCategoryController extends AdminWoocommerceController
 
     public function edit($id)
     {
+        $productCategory = ProductCategory::query()->findOrFail($id);
+        $paramDropdown = [
+            'exclude' => $productCategory->children->pluck('id')->all(),
+        ];
         $data = [
-            'dropdownCategory' => $this->productCategoryService->dropdown(),
-            'product_category' => ProductCategory::query()->findOrFail($id),
+            'dropdownCategory' => $this->productCategoryService->dropdown($paramDropdown),
+            'product_category' => $productCategory,
         ];
 
         return view('view_woocommerce::admin.product_category/form', $this->render($data));

@@ -32,9 +32,12 @@ class ProductCategoryService extends BaseService
     {
         $error = [];
 
-        $validator = Validator::make($params, [
-            'title' => 'required|min:2|max:255',
-        ]);
+        $validator = Validator::make(
+            $params,
+            [
+                'title' => 'required|min:2|max:255',
+            ]
+        );
 
         if ($validator->fails()) {
             static::convertErrorValidator($validator->errors()->toArray(), $error);
@@ -63,6 +66,18 @@ class ProductCategoryService extends BaseService
         } else {
             $myObject = ProductCategory::query()->find($formData['parent_id']);
             $formData['level'] = $myObject->level + 1;
+        }
+
+        if (!empty($formData['status']) && $formData['status'] == 'on') {
+            $formData['status'] = 1;
+        } else {
+            $formData['status'] = 0;
+        }
+
+        if (!empty($formData['is_home']) && $formData['is_home'] == 'on') {
+            $formData['is_home'] = 1;
+        } else {
+            $formData['is_home'] = 0;
         }
     }
 
@@ -107,11 +122,19 @@ class ProductCategoryService extends BaseService
     }
 
     /**
+     * @param array $params
+     *   - exclude array
+     *
      * @return array
      */
-    public function dropdown(): array
+    public function dropdown(array $params = []): array
     {
-        $data = ProductCategory::query()->orderByRaw('CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id')->get();
+        $model = ProductCategory::query();
+        if (!empty($params['exclude'])) {
+            $model->whereNotIn('id', $params['exclude']);
+        }
+
+        $data = $model->orderByRaw('CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id')->get();
         $html = [];
         if (!empty($data)) {
             foreach ($data as $key => $myCategory) {
@@ -127,7 +150,9 @@ class ProductCategoryService extends BaseService
      */
     public static function itemMenu(): object
     {
-        return ProductCategory::query()->orderByRaw('CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id')->get();
+        return ProductCategory::query()->orderByRaw(
+            'CASE WHEN parent_id = 0 THEN id ELSE parent_id END, parent_id,id'
+        )->get();
     }
 
     public function buildCondition($params = [], &$condition = [], &$sortBy = null, &$sortType = null)

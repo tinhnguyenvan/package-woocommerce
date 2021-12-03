@@ -12,6 +12,8 @@ Route::group(
     ],
     function () {
         // products
+        Route::get('/', [ProductController::class, 'index'])->name('admin.products.index.core');
+
         Route::get('products', [ProductController::class, 'index'])->name('admin.products.index');
         Route::get('products/create', [ProductController::class, 'create'])->name('admin.products.create');
         Route::post('products', [ProductController::class, 'store'])->name('admin.products.store');

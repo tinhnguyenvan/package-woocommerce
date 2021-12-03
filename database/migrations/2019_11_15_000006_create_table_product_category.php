@@ -24,6 +24,8 @@ class CreateTableProductCategory extends Migration
             $table->string('title', 255)->nullable();
             $table->string('slug', 255)->nullable();
             $table->smallInteger('level')->default(0);
+            $table->smallInteger('status')->default(0);
+            $table->tinyInteger('is_home')->default(0);
             $table->text('description')->nullable();
             $table->integer('total_usage')->nullable()->default(0);
             $table->string('image_url', 255)->nullable();

@@ -16,7 +16,7 @@
         </div>
         <div class="card-body">
             @include('admin.element.filter')
-            <table  id="simple-tree-table" class="table table-responsive-sm table-bordered table-hover font12">
+            <table id="simple-tree-table" class="table table-responsive-sm table-bordered table-hover font12">
                 <thead>
                 <tr class="bg-light">
                     <th>{{ trans('lang_woocommerce::product.title') }}</th>
@@ -39,6 +39,16 @@
                             </td>
                             <td>
                                 {{ $item->slug }}
+
+                                @if($item->status)
+                                    <label class="label label-success">Enable</label>
+                                @else
+                                    <label class="label label-default">Disable</label>
+                                @endif
+
+                                @if($item->is_home)
+                                    <label class="label label-primary">Home</label>
+                                @endif
                             </td>
                             <td>
                                 {{ $item->total_usage }}
@@ -52,7 +62,8 @@
                                 {{ $item->created_at->format(config('app.date_format')) }}
                             </td>
                             <td class="text-right">
-                                <form method="post" onsubmit="return confirm('Do you want DELETE ?');" action="{{ admin_url('product_categories/'.$item->id ) }}">
+                                <form method="post" onsubmit="return confirm('Do you want DELETE ?');"
+                                      action="{{ admin_url('product_categories/'.$item->id ) }}">
                                     @csrf
                                     @method('DELETE')
 

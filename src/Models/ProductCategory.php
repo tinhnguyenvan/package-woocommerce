@@ -44,6 +44,8 @@ class ProductCategory extends Model
         'image_id',
         'image_url',
         'total_usage',
+        'status',
+        'is_home',
         'seo_title',
         'seo_description',
         'creator_id',
