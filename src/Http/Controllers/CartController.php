@@ -26,6 +26,7 @@ final class CartController extends Controller
         parent::__construct();
         $this->saleOrderService = $saleOrderService;
         $this->saleOrderLineService = $saleOrderLineService;
+        $this->data['is_cart'] = 1;
     }
 
     public function index(Request $request)
@@ -38,6 +39,10 @@ final class CartController extends Controller
             'items' => $items,
             'title' => trans('common.cart.title'),
         ];
+
+        if (!empty($this->data['manifest']['layout_cart_index'])) {
+            return view($this->data['manifest']['layout_cart_index'], $this->render($data));
+        }
 
         return view('view_woocommerce::web.cart.index', $this->render($data));
     }
@@ -57,6 +62,10 @@ final class CartController extends Controller
             'title' => trans('common.cart.checkout'),
         ];
 
+        if (!empty($this->data['manifest']['layout_cart_checkout'])) {
+            return view($this->data['manifest']['layout_cart_checkout'], $this->render($data));
+        }
+
         return view('view_woocommerce::web.cart.checkout', $this->render($data));
     }
 
@@ -66,6 +75,10 @@ final class CartController extends Controller
             'title' => trans('common.cart.checkout.success'),
         ];
 
+        if (!empty($this->data['manifest']['layout_cart_success'])) {
+            return view($this->data['manifest']['layout_cart_success'], $this->render($data));
+        }
+
         return view('view_woocommerce::web.cart.success', $this->render($data));
     }
 
@@ -74,6 +87,10 @@ final class CartController extends Controller
         $data = [
             'title' => trans('common.cart.checkout.error'),
         ];
+
+        if (!empty($this->data['manifest']['layout_cart_error'])) {
+            return view($this->data['manifest']['layout_cart_error'], $this->render($data));
+        }
 
         return view('view_woocommerce::web.cart.error', $this->render($data));
     }
