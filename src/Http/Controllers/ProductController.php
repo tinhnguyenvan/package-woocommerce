@@ -24,23 +24,25 @@ final class ProductController extends Controller
 
     public function index(Request $request, $slugCategory = '')
     {
+        $condition = $request->only(['filter_price', 'filter_category', 'search']);
         $viewSubCate = false;
-        $items = $this->productService->getProductBySlugCategory($slugCategory, $request->all());
         $productCategory = ProductCategory::query()->where('slug', $slugCategory)->first();
         if (empty($productCategory)) {
             $productCategory = (object)[
                 'title' => config('app.woocommerce.seo_title'),
             ];
-
-            $this->productService->buildCondition($request->all(), $condition, $sortBy, $sortType);
-
-            $items = Product::active()
-                ->where($condition)
-                ->orderBy($sortBy, $sortType)
-                ->paginate(config('constant.PAGE_NUMBER'));
         } elseif ($productCategory->children->count() > 0 && env('PACKAGE_WOO_PRODUCT_CATEGORY_SUB', false)) {
             $viewSubCate = true;
         }
+
+        if(!empty($productCategory->id)) {
+            $condition['category_id'] = $productCategory->children->pluck('id')->all();
+            $condition['category_id'][]  = $productCategory->id;
+        }
+
+        $condition['status'] = 1;
+
+        $items = Product::filter($condition)->orderBy('id', 'desc')->paginate(config('constant.PAGE_NUMBER'));
 
         $data = [
             'is_product_list' => 1,

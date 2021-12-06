@@ -2,19 +2,23 @@
 
 namespace TinhPHP\Woocommerce\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use willvincent\Rateable\Rateable;
 
+/**
+ * @package App\Models
+ *
+ * @method static active()
+ * @method static filter($condition)
+ */
 class Product extends Model
 {
     use SoftDeletes;
     use Rateable;
-    // use HasTranslations;
-
-    public $translatable = ['title', 'summary', 'detail'];
 
     public const IS_HOME = 1;
 
@@ -92,6 +96,42 @@ class Product extends Model
     }
 
     /**
+     * Docs: https://laracasts.com/series/laravel-8-from-scratch/episodes/38
+     *
+     * @param Builder $query
+     * @param array $filters
+     */
+    public function scopeFilter(Builder $query, array $filters)
+    {
+        $query->when(
+            $filters['search'] ?? false,
+            function (Builder $query, $search) {
+                $query->where('title', '%' . $search . '%');
+            }
+        );
+
+        $query->when(
+            $filters['status'] ?? false,
+            function (Builder $query, $status) {
+                $query->where('status', $status);
+            }
+        );
+
+        $query->when(
+            $filters['category_id'] ?? false,
+            function (Builder $query, $categoryId) {
+                if (is_array($categoryId)) {
+                    $query->whereIn('category_id', $categoryId);
+                } else {
+                    $query->where('category_id', $categoryId);
+                }
+            }
+        );
+
+    }
+
+
+    /**
      * @return BelongsTo
      */
     public function category(): BelongsTo
@@ -110,19 +150,19 @@ class Product extends Model
 
         $html = [];
         foreach ($data as $value) {
-            $html[$value] = trans('lang_woocommerce::product.status.'.$value);
+            $html[$value] = trans('lang_woocommerce::product.status.' . $value);
         }
 
         return $html;
     }
 
-    public static function link($item)
+    public static function link($item): string
     {
-        $prefix = config('constant.URL_PREFIX_PRODUCT').'/';
+        $prefix = config('constant.URL_PREFIX_PRODUCT') . '/';
 
         $prefix .= $item->category->slug ?? 'no-category';
 
-        return base_url($prefix.'/'.$item->slug.'.html');
+        return base_url($prefix . '/' . $item->slug . '.html');
     }
 
     /**
@@ -186,11 +226,11 @@ class Product extends Model
 
     public function getLinkAttribute(): string
     {
-        $prefix = config('constant.URL_PREFIX_PRODUCT').'/';
+        $prefix = config('constant.URL_PREFIX_PRODUCT') . '/';
 
         $prefix .= $this->category->slug ?? 'no-category';
 
-        return base_url($prefix.'/'.$this->slug.'.html');
+        return base_url($prefix . '/' . $this->slug . '.html');
     }
 
     /**
@@ -208,7 +248,7 @@ class Product extends Model
     public function getFullImageUrlAttribute(): string
     {
         if ($this->image_id > 0) {
-            return asset('storage'.$this->image_url);
+            return asset('storage' . $this->image_url);
         } elseif (!empty($this->image_url)) {
             return $this->image_url;
         } else {
