@@ -67,6 +67,10 @@
                                     @csrf
                                     @method('DELETE')
 
+                                    <a href="{{ $item->link }}" target="_blank" class="btn btn-info btn-sm">
+                                        <i class="fa fa-globe"></i>
+                                    </a>
+
                                     <a href="{{ admin_url('woocommerce/product_categories/create?parent_id='.$item->id) }}"
                                        class="btn btn-sm btn-primary">
                                         <i class="fa fa-sitemap"></i> {{ trans('nav.add_menu_child') }}

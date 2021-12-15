@@ -6,15 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class ProductCategory extends Model
 {
     use SoftDeletes;
-
-    // use HasTranslations;
-
-    public $translatable = ['title', 'summary', 'detail'];
-
 
     public const STATUS_ACTIVE = 1;
     public const STATUS_DISABLE = 2;
@@ -86,6 +82,18 @@ class ProductCategory extends Model
         return $this->hasMany(ProductCategory::class, 'parent_id', 'id');
     }
 
+    public function getAllChildren(): Collection
+    {
+        $sections = new Collection();
+
+        foreach ($this->children as $section) {
+            $sections->push($section);
+            $sections = $sections->merge($section->getAllChildren());
+        }
+
+        return $sections;
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
@@ -118,11 +126,13 @@ class ProductCategory extends Model
     public function getFullImageUrlAttribute(): string
     {
         if ($this->image_id > 0) {
-            return asset('storage'.$this->image_url);
+            return asset('storage' . $this->image_url);
         } elseif (!empty($this->image_url)) {
             return $this->image_url;
         } else {
             return asset('site/img/empty.svg');
         }
     }
+
+
 }

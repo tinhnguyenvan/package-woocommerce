@@ -36,7 +36,7 @@ final class ProductController extends Controller
         }
 
         if(!empty($productCategory->id)) {
-            $condition['category_id'] = $productCategory->children->pluck('id')->all();
+            $condition['category_id'] = $productCategory->getAllChildren()->pluck('id');
             $condition['category_id'][]  = $productCategory->id;
         }
 
