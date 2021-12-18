@@ -35,7 +35,6 @@
                         </div>
 
                         @include('admin.element.form.input', ['name' => 'title', 'text' => trans('lang_woocommerce::product.title'), 'value' => $product_category->title ?? ''])
-                        @include('admin.element.form.input', ['name' => 'slug', 'text' => trans('lang_woocommerce::product.slug'), 'value' => $product_category->slug ?? ''])
                         @include('admin.element.form.textarea', ['name' => 'description', 'class' => 'ckeditor', 'text' => trans('lang_woocommerce::product.description'), 'value' => $product_category->description ?? ''])
                         @include('admin.element.form.image', ['name' => 'image_id', 'image_id' => $product_category->image_id ?? '', 'image_url' => $product_category->image_url ?? ''])
                         @include('admin.element.form.check', ['name' => 'is_home', 'text' => trans('lang_woocommerce::product.is_home'), 'value' => $product_category->is_home ?? 0])
