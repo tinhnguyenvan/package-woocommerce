@@ -103,30 +103,32 @@ class Product extends Model
      */
     public function scopeFilter(Builder $query, array $filters)
     {
-        $query->when(
-            $filters['search'] ?? false,
-            function (Builder $query, $search) {
-                $query->where('title', '%' . $search . '%');
-            }
-        );
+        $query->when($filters['search'] ?? false, function (Builder $query, $search) {
+            $query->where('title', '%' . $search . '%');
+        });
 
-        $query->when(
-            $filters['status'] ?? false,
-            function (Builder $query, $status) {
-                $query->where('status', $status);
-            }
-        );
+        $query->when($filters['status'] ?? false, function (Builder $query, $status) {
+            $query->where('status', $status);
+        });
 
-        $query->when(
-            $filters['category_id'] ?? false,
-            function (Builder $query, $categoryId) {
-                if (is_array($categoryId)) {
-                    $query->whereIn('category_id', $categoryId);
+        $query->when($filters['filter_price'] ?? false, function (Builder $query, $filterPrice) {
+            $filterPrice = explode('-', $filterPrice);
+            if (!empty($filterPrice[1])) {
+                if ($filterPrice[1] == 'all') {
+                    $query->where('price', '>', $filterPrice[0]);
                 } else {
-                    $query->where('category_id', $categoryId);
+                    $query->whereBetween('price', $filterPrice);
                 }
             }
-        );
+        });
+
+        $query->when($filters['category_id'] ?? false, function (Builder $query, $categoryId) {
+            if (is_array($categoryId)) {
+                $query->whereIn('category_id', $categoryId);
+            } else {
+                $query->where('category_id', $categoryId);
+            }
+        });
 
     }
 
