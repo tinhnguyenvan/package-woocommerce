@@ -63,7 +63,7 @@
                             </td>
                             <td class="text-right">
                                 <form method="post" onsubmit="return confirm('Do you want DELETE ?');"
-                                      action="{{ admin_url('product_categories/'.$item->id ) }}">
+                                      action="{{ admin_url('woocommerce/product_categories/'.$item->id ) }}">
                                     @csrf
                                     @method('DELETE')
 
