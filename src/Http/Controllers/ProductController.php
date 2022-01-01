@@ -83,7 +83,7 @@ final class ProductController extends Controller
         ];
 
         // set seo
-        $this->seo($product, $this->data);
+        $this->seo($product, $data);
 
         return view($this->layout . '.product.view', $this->render($data));
     }
