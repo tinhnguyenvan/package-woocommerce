@@ -8,6 +8,7 @@ namespace TinhPHP\Woocommerce\Http\Controllers\Admin;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use TinhPHP\Woocommerce\Jobs\ShoppingCartJob;
 use TinhPHP\Woocommerce\Models\Product;
 use App\Models\RolePermission;
@@ -171,6 +172,37 @@ class OrderController extends AdminWoocommerceController
         return back();
     }
 
+
+    /**
+     * Đặt lại đơn hàng
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function reorder(Request $request, $id): RedirectResponse
+    {
+        $order = SaleOrder::query()->findOrFail($id);
+
+        $newOrder = $order->replicate();
+
+        $newOrder->created_at = Carbon::now();
+        $newOrder->code = SaleOrder::generateCode();
+        $newOrder->status = SaleOrder::STATUS_NEW;
+        $newOrder->save();
+
+        foreach ($order->sale_order_lines as $orderLine) {
+            $newOrderLine = $orderLine->replicate();
+            $newOrderLine->created_at = Carbon::now();
+            $newOrderLine->order_id = $newOrder->id;
+            $newOrderLine->save();
+        }
+
+        $request->session()->flash('success', trans('lang_woocommerce::sale_order.reorder_success'));
+
+        return back();
+    }
+
     public function destroy(Request $request, $id)
     {
         $myObject = SaleOrder::query()->findOrFail($id);
@@ -271,4 +303,5 @@ class OrderController extends AdminWoocommerceController
         ];
         return response()->json($dataResponse);
     }
+
 }

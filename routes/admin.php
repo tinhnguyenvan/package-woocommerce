@@ -49,6 +49,7 @@ Route::group(
         Route::get('orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
         Route::get('orders/{id}/edit', [OrderController::class, 'edit'])->name('admin.orders.edit');
         Route::post('orders', [OrderController::class, 'store'])->name('admin.orders.store');
+        Route::post('orders/reorder/{id}', [OrderController::class, 'reorder'])->name('admin.reorder.store');
         Route::post('orders/resent-mail/{id}', [OrderController::class, 'resentMail'])->name('admin.resent-mail.store');
         Route::post('orders/status/{id}', [OrderController::class, 'status'])->name('admin.status.store');
         Route::put('orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');

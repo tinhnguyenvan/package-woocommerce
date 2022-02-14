@@ -119,6 +119,14 @@
                     </form>
 
                     <form style="display: inline-block"
+                          action="{{ admin_url('woocommerce/orders/reorder/'.$saleOrder->id) }}" method="post">
+                        @csrf
+                        <button class="btn btn-success">
+                            <i class="fa fa-copy" aria-hidden="true"></i> Đặt lại
+                        </button>
+                    </form>
+
+                    <form style="display: inline-block"
                           action="{{ admin_url('woocommerce/orders/status/'.$saleOrder->id) }}" method="post">
                         @csrf
                         <div class="btn-group">
